@@ -32,14 +32,14 @@ app.get("/user", (req, res) => {
 
 
 //get user by id
-app.get("/byid/user_id", (req, res)=>{
+app.get("/user/:user_id", (req, res)=>{
     const getid = req.params.user_id;
-    const q = "SELECT FROM user WHERE `user_id`=(?)";
+    const q = "SELECT * FROM user WHERE `user_id`=(?)";
     conn.query(q, getid, (err, data)=>{
         if (err) return (err);
         return res.json(data);
     })
-})
+});
 
 
 
