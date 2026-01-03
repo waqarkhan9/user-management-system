@@ -20,6 +20,8 @@ app.use(express.json());
 app.use(bodyParser.json())
 app.use(cors());
 
+
+//get all users
 app.get("/user", (req, res) => {
   const q = "SELECT * FROM user";
   conn.query(q,(err, data)=>{
@@ -28,6 +30,20 @@ app.get("/user", (req, res) => {
   });
 });
 
+
+//get user by id
+app.get("/byid/user_id", (req, res)=>{
+    const getid = req.params.user_id;
+    const q = "SELECT FROM user WHERE `user_id`=(?)";
+    conn.query(q, getid, (err, data)=>{
+        if (err) return (err);
+        return res.json(data);
+    })
+})
+
+
+
+//create a user
 app.post("/user", (req, res) => {
   const q = "INSERT INTO user (`first_name`, `last_name`) VALUES (?)";
   const values = [req.body.first_name, req.body.last_name];
