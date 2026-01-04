@@ -41,8 +41,6 @@ app.get("/user/:user_id", (req, res)=>{
     })
 });
 
-
-
 //create a user
 app.post("/user", (req, res) => {
   const q = "INSERT INTO user (`first_name`, `last_name`) VALUES (?)";
@@ -53,8 +51,26 @@ app.post("/user", (req, res) => {
   });
 });
 
+//delete user
+app.delete("/user/:user_id", (req,res)=>{
+  const q = "DELETE FROM user WHERE `user_id`=(?)";
+  const getid = req.params.user_id;
+  conn.query(q, getid,(err, data)=>{
+    if (err) return (err);
+    return res.json("user deleted");
+  })
+})
 
-
+//udpate user
+app.put("/user/:user_id",(req, res)=>{
+  const userId = req.params.user_id;
+  const q = "UPDATE user SET `first_name`=?, `last_name`=? WHERE user_id = ?";
+  const values = [req.body.first_name, req.body.last_name];
+  conn.query(q,[...values,userId],(err,data)=>{
+    if(err) return err;
+    return res.json("user updated successfully",data);
+  })
+})
 
 
 app.listen(3000,()=>{
