@@ -72,7 +72,6 @@ app.put("/user/:user_id",(req, res)=>{
   })
 })
 
-
 app.listen(3000,()=>{
   console.log("connect to backend and server is running");
 });
